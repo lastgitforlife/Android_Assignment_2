@@ -39,8 +39,8 @@ public class BloodPressureListAdapter extends ArrayAdapter<BloodPressure> {
         TextView tvSchool = listViewItem.findViewById(R.id.textViewSchool);
 
         BloodPressure bloodPressure = bloodPressureList.get(position);
-        tvName.setText(bloodPressure.getStudentFirstName()
-                + " " + bloodPressure.getStudentLastName());
+        tvName.setText(bloodPressure.getSystolic()
+                + " " + bloodPressure.getDiastolic());
         tvSchool.setText(bloodPressure.getSchool());
 
         return listViewItem;

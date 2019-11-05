@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/hintFirstName"
+        android:hint="@string/hintUserId"
         android:inputType="textPersonName" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/hintLastName"
+        android:hint="@string/hintSystolic"
         android:inputType="textPersonName" />
 
     <Spinner

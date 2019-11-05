@@ -31,8 +31,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseStudents;
-    EditText editTextFirstName;
-    EditText editTextLastName;
+    EditText editTextUserId;
+    EditText editTextSystolic;
+    EditText editTextDiastolic;
+    EditText editTextDate;
+    EditText editTextTime;
+
     Spinner spinnerSchool;
     Button buttonAddStudent;
 
@@ -47,10 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // setup databaseStudents with a reference to the real database
-        databaseStudents = FirebaseDatabase.getInstance().getReference("students");
+        databaseStudents = FirebaseDatabase.getInstance().getReference("users");
 
-        editTextFirstName = findViewById(R.id.editTextFirstName);
-        editTextLastName = findViewById(R.id.editTextLastName);
+        editTextUserId = findViewById(R.id.editTextUserId);
+        editTextSystolic = findViewById(R.id.editTextSystolic);
+        editTextDiastolic = findViewById(R.id.editTextDiastolic);
+        editTextDate = findViewById(R.id.editTextDate);
+        editTextTime = findViewById(R.id.editTextTime);
         buttonAddStudent = findViewById(R.id.buttonAddStudent);
         spinnerSchool = findViewById(R.id.spinnerSchool);
 
@@ -69,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 BloodPressure bloodPressure = bloodPressureList.get(position);
 
-                showUpdateDialog(bloodPressure.getStudentId(),
-                        bloodPressure.getStudentFirstName(),
-                        bloodPressure.getStudentLastName(),
+                showUpdateDialog(bloodPressure.getUserId(),
+                        bloodPressure.getSystolic(),
+                        bloodPressure.getDiastolic(),
                         bloodPressure.getSchool());
 
                 return false;
@@ -83,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addStudent() {
-        String firstName = editTextFirstName.getText().toString().trim();
-        String lastName = editTextLastName.getText().toString().trim();
+        String firstName = editTextUserId.getText().toString().trim();
+        String lastName = editTextSystolic.getText().toString().trim();
         String school = spinnerSchool.getSelectedItem().toString().trim();
 
         if (TextUtils.isEmpty(firstName)) {
@@ -107,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(Object o) {
                 Toast.makeText(MainActivity.this,"BloodPressure added.",Toast.LENGTH_LONG).show();
 
-                editTextFirstName.setText("");
-                editTextLastName.setText("");
+                editTextUserId.setText("");
+                editTextSystolic.setText("");
                 spinnerSchool.setSelection(0);
             }
         });

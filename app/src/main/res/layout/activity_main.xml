@@ -7,32 +7,67 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editTextFirstName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/hintFirstName"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintLastName"
-        android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/spinnerSchool"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/schools" />
+            <EditText
+                android:id="@+id/editTextUserId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/hintUserId"
+                android:inputType="textEmailAddress" />
 
-    <Button
-        android:id="@+id/buttonAddStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btnAddStudent" />
+            <EditText
+                android:id="@+id/editTextSystolic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintSystolic"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/hintDate"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/editTextDiastolic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintDiastolic"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/editTextTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/hintTime"
+                android:inputType="time" />
+
+            <Spinner
+                android:id="@+id/spinnerSchool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/schools" />
+
+            <Button
+                android:id="@+id/buttonAddStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnAddStudent" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <ListView
         android:id="@+id/lvStudents"

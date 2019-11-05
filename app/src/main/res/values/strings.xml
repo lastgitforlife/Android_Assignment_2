@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">Firecracker</string>
-    <string name="hintFirstName">First Name</string>
-    <string name="hintLastName">Last Name</string>
+    <string name="app_name">Blood Pressure App</string>
     <string name="btnAddStudent">Add Student</string>
     <string name="enterNewName">Enter New Name</string>
     <string name="btnUpdate">Update</string>
     <string name="btnDelete">Delete</string>
+    <string name="hintUserId">User ID</string>
+    <string name="hintSystolic">Systolic Reading</string>
+    <string name="hintDiastolic">Diastolic Reading</string>
+    <string name="hintDate">dd/mm/yy</string>
+    <string name="hintTime">hh/mm</string>
 
     <string-array name="schools">
         <item>Business</item>

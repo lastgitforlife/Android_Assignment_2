@@ -1,37 +1,37 @@
 package com.example.assignment_2;
 
 public class BloodPressure {
-    String studentId;
-    String studentFirstName;
-    String studentLastName;
+    String userId;
+    String Systolic;
+    String Diastolic;
     String school;
 
     public BloodPressure() {}
 
-    public BloodPressure(String studentId, String studentFirstName,
-                         String studentLastName, String school) {
-        this.studentId = studentId;
-        this.studentFirstName = studentFirstName;
-        this.studentLastName = studentLastName;
+    public BloodPressure(String userId, String Systolic,
+                         String Diastolic, String school) {
+        this.userId = userId;
+        this.Systolic = Systolic;
+        this.Diastolic = Diastolic;
         this.school = school;
     }
 
-    public String getStudentId() { return studentId; }
+    public String getUserId() { return userId; }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getStudentFirstName() {return studentFirstName;}
+    public String getSystolic() {return Systolic;}
 
-    public void setStudentFirstName(String studentFirstName) {
-        this.studentFirstName = studentFirstName;
+    public void setSystolic(String systolic) {
+        this.Systolic = systolic;
     }
 
-    public String getStudentLastName() {return studentLastName;}
+    public String getDiastolic() {return Diastolic;}
 
-    public void setStudentLastName(String studentLastName) {
-        this.studentLastName = studentLastName;
+    public void setDiastolic(String diastolic) {
+        this.Diastolic = diastolic;
     }
 
     public String getSchool() {return school;}
