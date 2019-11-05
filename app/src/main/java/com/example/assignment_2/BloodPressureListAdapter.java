@@ -41,7 +41,6 @@ public class BloodPressureListAdapter extends ArrayAdapter<BloodPressure> {
         BloodPressure bloodPressure = bloodPressureList.get(position);
         tvName.setText(bloodPressure.getSystolic()
                 + " " + bloodPressure.getDiastolic());
-        tvSchool.setText(bloodPressure.getSchool());
 
         return listViewItem;
     }

@@ -2,18 +2,20 @@ package com.example.assignment_2;
 
 public class BloodPressure {
     String userId;
-    String Systolic;
-    String Diastolic;
-    String school;
+    String systolic;
+    String diastolic;
+    String date;
+    String time;
 
     public BloodPressure() {}
 
-    public BloodPressure(String userId, String Systolic,
-                         String Diastolic, String school) {
+    public BloodPressure(String userId, String systolic,
+                         String diastolic, String date, String time) {
         this.userId = userId;
-        this.Systolic = Systolic;
-        this.Diastolic = Diastolic;
-        this.school = school;
+        this.systolic = systolic;
+        this.diastolic = diastolic;
+        this.date = date;
+        this.time = time;
     }
 
     public String getUserId() { return userId; }
@@ -22,21 +24,15 @@ public class BloodPressure {
         this.userId = userId;
     }
 
-    public String getSystolic() {return Systolic;}
+    public String getSystolic() {return systolic;}
 
     public void setSystolic(String systolic) {
-        this.Systolic = systolic;
+        this.systolic = systolic;
     }
 
-    public String getDiastolic() {return Diastolic;}
+    public String getDiastolic() {return diastolic;}
 
     public void setDiastolic(String diastolic) {
-        this.Diastolic = diastolic;
-    }
-
-    public String getSchool() {return school;}
-
-    public void setSchool(String school) {
-        this.school = school;
+        this.diastolic = diastolic;
     }
 }

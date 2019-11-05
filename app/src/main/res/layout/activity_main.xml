@@ -54,12 +54,6 @@
                 android:hint="@string/hintTime"
                 android:inputType="time" />
 
-            <Spinner
-                android:id="@+id/spinnerSchool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/schools" />
-
             <Button
                 android:id="@+id/buttonAddStudent"
                 android:layout_width="match_parent"

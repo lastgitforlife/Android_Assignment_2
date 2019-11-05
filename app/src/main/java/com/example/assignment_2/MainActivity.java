@@ -30,14 +30,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseReference databaseStudents;
+    DatabaseReference databaseBlood;
     EditText editTextUserId;
     EditText editTextSystolic;
     EditText editTextDiastolic;
     EditText editTextDate;
     EditText editTextTime;
 
-    Spinner spinnerSchool;
     Button buttonAddBlood;
 
     ListView lvStudents;
@@ -50,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // setup databaseStudents with a reference to the real database
-        databaseStudents = FirebaseDatabase.getInstance().getReference("users");
+        // setup databaseBlood with a reference to the real database
+        databaseBlood = FirebaseDatabase.getInstance().getReference("users");
 
         editTextUserId = findViewById(R.id.editTextUserId);
         editTextSystolic = findViewById(R.id.editTextSystolic);
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         editTextDate = findViewById(R.id.editTextDate);
         editTextTime = findViewById(R.id.editTextTime);
         buttonAddBlood = findViewById(R.id.buttonAddStudent);
-        spinnerSchool = findViewById(R.id.spinnerSchool);
 
         buttonAddBlood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
                 showUpdateDialog(bloodPressure.getUserId(),
                         bloodPressure.getSystolic(),
-                        bloodPressure.getDiastolic(),
-                        bloodPressure.getSchool());
+                        bloodPressure.getDiastolic()
+                );
 
                 return false;
             }
@@ -90,24 +88,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addBlood() {
-        String firstName = editTextUserId.getText().toString().trim();
-        String lastName = editTextSystolic.getText().toString().trim();
-        String school = spinnerSchool.getSelectedItem().toString().trim();
+        String userId = editTextUserId.getText().toString().trim();
+        String systolic = editTextSystolic.getText().toString().trim();
+        String diastolic = editTextDiastolic.getText().toString().trim();
+        String date = editTextDate.getText().toString().trim();
+        String time = editTextTime.getText().toString().trim();
 
-        if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(this, "You must enter a first name.", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(userId)) {
+            Toast.makeText(this, "You must enter a User Id.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(this, "You must enter a last name.", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(systolic)) {
+            Toast.makeText(this, "You must enter Systolic pressure.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(diastolic)) {
+            Toast.makeText(this, "You must enter a Diastolic pressure.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        String id = databaseStudents.push().getKey();
-        BloodPressure bloodPressure = new BloodPressure(id, firstName, lastName, school);
+        if (TextUtils.isEmpty(date)) {
+            Toast.makeText(this, "You must enter a date.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        Task setValueTask = databaseStudents.child(id).setValue(bloodPressure);
+        if (TextUtils.isEmpty(time)) {
+            Toast.makeText(this, "You must enter a time.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String id = databaseBlood.push().getKey();
+        BloodPressure bloodPressure = new BloodPressure(userId, systolic, diastolic, date, time);
+
+        Task setValueTask = databaseBlood.child(userId).setValue(bloodPressure);
 
         setValueTask.addOnSuccessListener(new OnSuccessListener() {
             @Override
@@ -116,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
                 editTextUserId.setText("");
                 editTextSystolic.setText("");
-                spinnerSchool.setSelection(0);
             }
         });
 
@@ -133,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        databaseStudents.addValueEventListener(new ValueEventListener() {
+        databaseBlood.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bloodPressureList.clear();
@@ -151,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateBlood(String id, String firstName, String lastName, String school) {
-        DatabaseReference dbRef = databaseStudents.child(id);
+    private void updateBlood(String userId, String siabolic, String diabolic, String date, String time) {
+        DatabaseReference dbRef = databaseBlood.child(userId);
 
-        BloodPressure bloodPressure = new BloodPressure(id,firstName,lastName,school);
+        BloodPressure bloodPressure = new BloodPressure(userId, siabolic,diabolic, date, time);
 
         Task setValueTask = dbRef.setValue(bloodPressure);
 
@@ -176,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDialog(final String studentId, String firstName, String lastName, String school) {
+    private void showUpdateDialog(final String userId, String systolic, String diastolic, String date, String time) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
         LayoutInflater inflater = getLayoutInflater();
@@ -185,17 +198,17 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextFirstName = dialogView.findViewById(R.id.editTextFirstName);
-        editTextFirstName.setText(firstName);
+        editTextFirstName.setText(systolic);
 
         final EditText editTextLastName = dialogView.findViewById(R.id.editTextLastName);
-        editTextLastName.setText(lastName);
+        editTextLastName.setText(diastolic);
 
         final Spinner spinnerSchool = dialogView.findViewById(R.id.spinnerSchool);
-        spinnerSchool.setSelection(((ArrayAdapter<String>)spinnerSchool.getAdapter()).getPosition(school));
+        spinnerSchool.setSelection(((ArrayAdapter<String>)spinnerSchool.getAdapter()).getPosition(date));
 
         final Button btnUpdate = dialogView.findViewById(R.id.btnUpdate);
 
-        dialogBuilder.setTitle("Update BloodPressure " + firstName + " " + lastName);
+        dialogBuilder.setTitle("Update BloodPressure " + systolic + " " + diastolic);
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -203,19 +216,20 @@ public class MainActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstName = editTextFirstName.getText().toString().trim();
-                String lastName = editTextLastName.getText().toString().trim();
-                String school = spinnerSchool.getSelectedItem().toString().trim();
+                String systolic = editTextSystolic.getText().toString().trim();
+                String diastolic = editTextDiastolic.getText().toString().trim();
+                String date = editTextDate.getText().toString().trim();
+                String time = editTextTime.getText().toString().trim();
 
-                if (TextUtils.isEmpty(firstName)) {
-                    editTextFirstName.setError("First Name is required");
+                if (TextUtils.isEmpty(systolic)) {
+                    editTextSystolic.setError("Systolic is required");
                     return;
-                } else if (TextUtils.isEmpty(lastName)) {
-                    editTextLastName.setError("Last Name is required");
+                } else if (TextUtils.isEmpty(diastolic)) {
+                    editTextDiastolic.setError("Diastolic is required");
                     return;
                 }
 
-                updateBlood(studentId, firstName, lastName, school);
+                updateBlood(userId, firstName, lastName, school);
 
                 alertDialog.dismiss();
             }
@@ -225,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteBlood(studentId);
+                deleteBlood(userId);
 
                 alertDialog.dismiss();
             }
@@ -234,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deleteBlood(String id) {
-        DatabaseReference dbRef = databaseStudents.child(id);
+        DatabaseReference dbRef = databaseBlood.child(id);
 
         Task setRemoveTask = dbRef.removeValue();
         setRemoveTask.addOnSuccessListener(new OnSuccessListener() {
