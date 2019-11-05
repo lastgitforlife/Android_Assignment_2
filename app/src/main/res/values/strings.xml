@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Assignment_2</string>
+    <string name="app_name">Firecracker</string>
+    <string name="hintFirstName">First Name</string>
+    <string name="hintLastName">Last Name</string>
+    <string name="btnAddStudent">Add Student</string>
+    <string name="enterNewName">Enter New Name</string>
+    <string name="btnUpdate">Update</string>
+    <string name="btnDelete">Delete</string>
+
+    <string-array name="schools">
+        <item>Business</item>
+        <item>Computing</item>
+        <item>Energy</item>
+        <item>Mining</item>
+        <item>Nursing</item>
+    </string-array>
+
 </resources>
