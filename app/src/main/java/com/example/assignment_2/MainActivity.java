@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextTime;
 
     Spinner spinnerSchool;
-    Button buttonAddStudent;
+    Button buttonAddBlood;
 
     ListView lvStudents;
     List<BloodPressure> bloodPressureList;
@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
         editTextDiastolic = findViewById(R.id.editTextDiastolic);
         editTextDate = findViewById(R.id.editTextDate);
         editTextTime = findViewById(R.id.editTextTime);
-        buttonAddStudent = findViewById(R.id.buttonAddStudent);
+        buttonAddBlood = findViewById(R.id.buttonAddStudent);
         spinnerSchool = findViewById(R.id.spinnerSchool);
 
-        buttonAddStudent.setOnClickListener(new View.OnClickListener() {
+        buttonAddBlood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addStudent();
+                addBlood();
             }
         });
 
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void addStudent() {
+    private void addBlood() {
         String firstName = editTextUserId.getText().toString().trim();
         String lastName = editTextSystolic.getText().toString().trim();
         String school = spinnerSchool.getSelectedItem().toString().trim();
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateStudent(String id, String firstName, String lastName, String school) {
+    private void updateBlood(String id, String firstName, String lastName, String school) {
         DatabaseReference dbRef = databaseStudents.child(id);
 
         BloodPressure bloodPressure = new BloodPressure(id,firstName,lastName,school);
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                updateStudent(studentId, firstName, lastName, school);
+                updateBlood(studentId, firstName, lastName, school);
 
                 alertDialog.dismiss();
             }
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteStudent(studentId);
+                deleteBlood(studentId);
 
                 alertDialog.dismiss();
             }
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void deleteStudent(String id) {
+    private void deleteBlood(String id) {
         DatabaseReference dbRef = databaseStudents.child(id);
 
         Task setRemoveTask = dbRef.removeValue();
