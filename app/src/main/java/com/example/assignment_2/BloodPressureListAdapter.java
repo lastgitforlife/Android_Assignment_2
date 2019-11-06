@@ -36,10 +36,12 @@ public class BloodPressureListAdapter extends ArrayAdapter<BloodPressure> {
         View listViewItem = inflater.inflate(R.layout.list_layout, null, true);
 
         TextView tvName = listViewItem.findViewById(R.id.textViewName);
+        TextView tvDate = listViewItem.findViewById(R.id.textViewDateTime);
 
         BloodPressure bloodPressure = bloodPressureList.get(position);
         tvName.setText(bloodPressure.getSystolic()
                 + " " + bloodPressure.getDiastolic());
+        tvDate.setText(bloodPressure.getDate() + "-" +  bloodPressure.getTime());
 
         return listViewItem;
     }

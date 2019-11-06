@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Blood Pressure App</string>
-    <string name="btnAddStudent">Add Student</string>
+    <string name="btnAddBlood">Add Blood pressure</string>
     <string name="enterNewName">Enter New Name</string>
     <string name="btnUpdate">Update</string>
     <string name="btnDelete">Delete</string>
