@@ -9,12 +9,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editTextUserId"
@@ -32,19 +32,19 @@
                 android:inputType="numberDecimal" />
 
             <EditText
+                android:id="@+id/editTextDiastolic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintDiastolic"
+                android:inputType="numberDecimal" />
+
+            <EditText
                 android:id="@+id/editTextDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/hintDate"
                 android:inputType="date" />
-
-            <EditText
-                android:id="@+id/editTextDiastolic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintDiastolic"
-                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/editTextTime"

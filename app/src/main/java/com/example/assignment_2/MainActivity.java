@@ -5,11 +5,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseReference databaseBlood;
+    private DatabaseReference databaseBlood;
     EditText editTextUserId;
     EditText editTextSystolic;
     EditText editTextDiastolic;
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button buttonAddBlood;
 
-    ListView lvStudents;
+    ListView lvBlood;
     List<BloodPressure> bloodPressureList;
 
 
@@ -66,17 +64,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        lvStudents = findViewById(R.id.lvStudents);
+        lvBlood = findViewById(R.id.lvStudents);
         bloodPressureList = new ArrayList<BloodPressure>();
 
-        lvStudents.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lvBlood.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 BloodPressure bloodPressure = bloodPressureList.get(position);
 
                 showUpdateDialog(bloodPressure.getUserId(),
                         bloodPressure.getSystolic(),
-                        bloodPressure.getDiastolic()
+                        bloodPressure.getDiastolic(),
+                        bloodPressure.getDate(),
+                        bloodPressure.getTime()
                 );
 
                 return false;
@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
                 editTextUserId.setText("");
                 editTextSystolic.setText("");
+                editTextDiastolic.setText("");
+                editTextDate.setText("");
+                editTextTime.setText("");
             }
         });
 
@@ -150,13 +153,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bloodPressureList.clear();
-                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
-                    BloodPressure bloodPressure = studentSnapshot.getValue(BloodPressure.class);
+                for (DataSnapshot bloodSnapshot : dataSnapshot.getChildren()) {
+                    BloodPressure bloodPressure = bloodSnapshot.getValue(BloodPressure.class);
                     bloodPressureList.add(bloodPressure);
                 }
 
                 BloodPressureListAdapter adapter = new BloodPressureListAdapter(MainActivity.this, bloodPressureList);
-                lvStudents.setAdapter(adapter);
+                lvBlood.setAdapter(adapter);
             }
 
             @Override
@@ -164,10 +167,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateBlood(String userId, String siabolic, String diabolic, String date, String time) {
+    private void updateBlood(String userId, String systolic, String diastolic, String date, String time) {
         DatabaseReference dbRef = databaseBlood.child(userId);
 
-        BloodPressure bloodPressure = new BloodPressure(userId, siabolic,diabolic, date, time);
+        BloodPressure bloodPressure = new BloodPressure(userId, systolic,diastolic, date, time);
 
         Task setValueTask = dbRef.setValue(bloodPressure);
 
@@ -203,12 +206,9 @@ public class MainActivity extends AppCompatActivity {
         final EditText editTextLastName = dialogView.findViewById(R.id.editTextLastName);
         editTextLastName.setText(diastolic);
 
-        final Spinner spinnerSchool = dialogView.findViewById(R.id.spinnerSchool);
-        spinnerSchool.setSelection(((ArrayAdapter<String>)spinnerSchool.getAdapter()).getPosition(date));
-
         final Button btnUpdate = dialogView.findViewById(R.id.btnUpdate);
 
-        dialogBuilder.setTitle("Update BloodPressure " + systolic + " " + diastolic);
+        dialogBuilder.setTitle("Update BloodPressure");
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                updateBlood(userId, firstName, lastName, school);
+                updateBlood(userId, systolic, diastolic, date, time);
 
                 alertDialog.dismiss();
             }
@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void deleteBlood(String id) {
-        DatabaseReference dbRef = databaseBlood.child(id);
+    private void deleteBlood(String userId) {
+        DatabaseReference dbRef = databaseBlood.child(userId);
 
         Task setRemoveTask = dbRef.removeValue();
         setRemoveTask.addOnSuccessListener(new OnSuccessListener() {

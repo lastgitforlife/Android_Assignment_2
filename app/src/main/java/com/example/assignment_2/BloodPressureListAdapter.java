@@ -36,7 +36,6 @@ public class BloodPressureListAdapter extends ArrayAdapter<BloodPressure> {
         View listViewItem = inflater.inflate(R.layout.list_layout, null, true);
 
         TextView tvName = listViewItem.findViewById(R.id.textViewName);
-        TextView tvSchool = listViewItem.findViewById(R.id.textViewSchool);
 
         BloodPressure bloodPressure = bloodPressureList.get(position);
         tvName.setText(bloodPressure.getSystolic()
