@@ -200,11 +200,17 @@ public class MainActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.update_dialoge, null);
         dialogBuilder.setView(dialogView);
 
-        final EditText editTextFirstName = dialogView.findViewById(R.id.editTextFirstName);
-        editTextFirstName.setText(systolic);
+        final EditText editTextSystolic = dialogView.findViewById(R.id.editTextSystolic);
+        editTextSystolic.setText(systolic);
 
-        final EditText editTextLastName = dialogView.findViewById(R.id.editTextLastName);
-        editTextLastName.setText(diastolic);
+        final EditText editTextDiastolic = dialogView.findViewById(R.id.editTextDiastolic);
+        editTextDiastolic.setText(diastolic);
+
+        final EditText editTextDate = dialogView.findViewById(R.id.editTextDate);
+        editTextDate.setText(date);
+
+        final EditText editTextTime = dialogView.findViewById(R.id.editTextTime);
+        editTextTime.setText(time);
 
         final Button btnUpdate = dialogView.findViewById(R.id.btnUpdate);
 
@@ -226,6 +232,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 } else if (TextUtils.isEmpty(diastolic)) {
                     editTextDiastolic.setError("Diastolic is required");
+                    return;
+                } else if (TextUtils.isEmpty(date)) {
+                    editTextDiastolic.setError("date is required");
+                    return;
+                } else if (TextUtils.isEmpty(time)) {
+                    editTextDiastolic.setError("Time is required");
                     return;
                 }
 
