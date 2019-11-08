@@ -38,22 +38,6 @@
                 android:hint="@string/hintDiastolic"
                 android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/hintDate"
-                android:inputType="date" />
-
-            <EditText
-                android:id="@+id/editTextTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/hintTime"
-                android:inputType="time" />
-
             <Button
                 android:id="@+id/buttonAddBlood"
                 android:layout_width="match_parent"

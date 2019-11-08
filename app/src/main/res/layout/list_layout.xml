@@ -13,9 +13,16 @@
         android:text="TextView" />
 
     <TextView
+        android:id="@+id/textViewBloodPressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/textViewDateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
 
 </LinearLayout>

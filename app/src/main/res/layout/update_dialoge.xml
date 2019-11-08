@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/hintUserId"
+        android:hint="@string/hintSystolic"
         android:inputType="textPersonName" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/hintSystolic"
+        android:hint="@string/hintDiastolic"
         android:inputType="textPersonName" />
 
     <Button

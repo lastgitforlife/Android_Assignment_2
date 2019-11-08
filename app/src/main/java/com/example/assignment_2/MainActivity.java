@@ -1,5 +1,6 @@
 package com.example.assignment_2;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -23,8 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextUserId;
     EditText editTextSystolic;
     EditText editTextDiastolic;
-    EditText editTextDate;
-    EditText editTextTime;
 
     Button buttonAddBlood;
 
@@ -53,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         editTextUserId = findViewById(R.id.editTextUserId);
         editTextSystolic = findViewById(R.id.editTextSystolic);
         editTextDiastolic = findViewById(R.id.editTextDiastolic);
-        editTextDate = findViewById(R.id.editTextDate);
-        editTextTime = findViewById(R.id.editTextTime);
         buttonAddBlood = findViewById(R.id.buttonAddBlood);
 
         buttonAddBlood.setOnClickListener(new View.OnClickListener() {
@@ -87,12 +89,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkForCrisis(int systolic, int diastolic) {
+        if(systolic > 180 || diastolic > 120){
+            new AlertDialog.Builder(this)
+                    .setTitle("Warning")
+                    .setMessage("Your are experiencing a hypertensive crisis. Consult your doctor immediately.")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+    }
+
     private void addBlood() {
         String userId = editTextUserId.getText().toString().trim();
         String systolic = editTextSystolic.getText().toString().trim();
         String diastolic = editTextDiastolic.getText().toString().trim();
-        String date = editTextDate.getText().toString().trim();
-        String time = editTextTime.getText().toString().trim();
+        Date datetime = Calendar.getInstance().getTime();
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.CANADA).format(datetime);
+        String time = new SimpleDateFormat("HH:mm:ss", Locale.CANADA).format(datetime);
 
         if (TextUtils.isEmpty(userId)) {
             Toast.makeText(this, "You must enter a User Id.", Toast.LENGTH_LONG).show();
@@ -108,15 +121,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(date)) {
-            Toast.makeText(this, "You must enter a date.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(time)) {
-            Toast.makeText(this, "You must enter a time.", Toast.LENGTH_LONG).show();
-            return;
-        }
+        checkForCrisis(Integer.parseInt(systolic), Integer.parseInt(diastolic));
 
         BloodPressure bloodPressure = new BloodPressure(userId, systolic, diastolic, date, time);
 
@@ -130,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 editTextUserId.setText("");
                 editTextSystolic.setText("");
                 editTextDiastolic.setText("");
-                editTextDate.setText("");
-                editTextTime.setText("");
             }
         });
 
@@ -170,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateBlood(String userId, String systolic, String diastolic, String date, String time) {
         DatabaseReference dbRef = databaseBlood.child(userId).child(date + "-" + time);
+
+        checkForCrisis(Integer.parseInt(systolic), Integer.parseInt(diastolic));
 
         BloodPressure bloodPressure = new BloodPressure(userId, systolic,diastolic, date, time);
 

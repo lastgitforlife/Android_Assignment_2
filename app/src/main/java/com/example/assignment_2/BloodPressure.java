@@ -1,6 +1,7 @@
 package com.example.assignment_2;
 
 public class BloodPressure {
+
     String userId;
     String systolic;
     String diastolic;
