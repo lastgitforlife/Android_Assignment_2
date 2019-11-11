@@ -7,16 +7,26 @@ public class BloodPressure {
     String diastolic;
     String date;
     String time;
+    String condition;
 
     public BloodPressure() {}
 
     public BloodPressure(String userId, String systolic,
-                         String diastolic, String date, String time) {
+                         String diastolic, String date, String time, String condition) {
         this.userId = userId;
         this.systolic = systolic;
         this.diastolic = diastolic;
         this.date = date;
         this.time = time;
+        this.condition = condition;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
     public String getUserId() { return userId; }

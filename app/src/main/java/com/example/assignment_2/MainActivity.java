@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     ListView lvBlood;
     List<BloodPressure> bloodPressureList;
+    List<BloodPressure> userPressureList;
 
 
 
@@ -99,6 +101,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String checkCondition(int systolic, int diastolic) {
+        if(systolic > 180 || diastolic > 120){
+            return "Hypertensive Crisis";
+        }
+        else if(systolic >= 140 || diastolic >= 90){
+            return "High Blood Pressure (Stage 2)";
+        }
+        else if(systolic >= 130 || diastolic >= 80){
+            return "High Blood Pressure (Stage 1)";
+        }
+        else if(systolic >= 120){
+            return "Elevated";
+        }
+        else {
+            return "Normal";
+        }
+    }
+
     private void addBlood() {
         String userId = editTextUserId.getText().toString().trim();
         String systolic = editTextSystolic.getText().toString().trim();
@@ -123,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
 
         checkForCrisis(Integer.parseInt(systolic), Integer.parseInt(diastolic));
 
-        BloodPressure bloodPressure = new BloodPressure(userId, systolic, diastolic, date, time);
+        String condition = checkCondition(Integer.parseInt(systolic), Integer.parseInt(diastolic));
+
+        BloodPressure bloodPressure = new BloodPressure(userId, systolic, diastolic, date, time, condition);
 
         Task setValueTask = databaseBlood.child(userId).child(date + '-' + time).setValue(bloodPressure);
 
@@ -176,7 +198,9 @@ public class MainActivity extends AppCompatActivity {
 
         checkForCrisis(Integer.parseInt(systolic), Integer.parseInt(diastolic));
 
-        BloodPressure bloodPressure = new BloodPressure(userId, systolic,diastolic, date, time);
+        String condition = checkCondition(Integer.parseInt(systolic), Integer.parseInt(diastolic));
+
+        BloodPressure bloodPressure = new BloodPressure(userId, systolic,diastolic, date, time, condition);
 
         Task setValueTask = dbRef.setValue(bloodPressure);
 
@@ -249,6 +273,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button buttonReport = dialogView.findViewById(R.id.buttonReport);
+        buttonReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                createReport(userId);
+            }
+        });
+
+    }
+
+    private void createReport(final String userId) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        final View dialogView = inflater.inflate(R.layout.report_dialogue, null);
+        dialogBuilder.setView(dialogView);
+
+        final TextView tvReport = dialogView.findViewById((R.id.textViewReport));
+
+        double avgSystolic = 0;
+        double avgDiastolic = 0;
+
+        int count = 0;
+        for (BloodPressure bp : bloodPressureList) {
+            if(bp.getUserId().equals(userId)) {
+                avgSystolic += Integer.parseInt(bp.getSystolic());
+                avgDiastolic += Integer.parseInt(bp.getDiastolic());
+                count ++;
+            }
+        }
+
+        avgSystolic = avgSystolic / count;
+        avgDiastolic = avgDiastolic / count;
+
+        String condition = checkCondition((int)avgSystolic, (int)avgDiastolic);
+
+        tvReport.setText(String.format(Locale.CANADA,"%s\nAverage BP: %.2f/%.2f\nCondition: %s",
+                userId, avgSystolic, avgDiastolic, condition));
+
+        final AlertDialog reportDialog = dialogBuilder.create();
+        reportDialog.show();
     }
 
     private void deleteBlood(String userId, String date, String time) {

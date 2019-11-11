@@ -33,5 +33,10 @@
         android:layout_height="wrap_content"
         android:text="@string/btnDelete" />
 
+    <Button
+        android:id="@+id/buttonReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hintReport" />
 
 </LinearLayout>

@@ -9,6 +9,8 @@
     <string name="hintDiastolic">Diastolic Reading</string>
     <string name="hintDate">dd/mm/yy</string>
     <string name="hintTime">hh/mm</string>
+    <string name="hintReport">Generate Report</string>
+    <string name="textview">TextView</string>
 
     <string-array name="schools">
         <item>Business</item>
