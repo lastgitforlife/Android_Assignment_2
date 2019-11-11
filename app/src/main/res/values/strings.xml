@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blood Pressure App</string>
+    <string name="app_name">Abrary_Tailby</string>
     <string name="btnAddBlood">Add Blood pressure</string>
     <string name="enterNewName">Enter New Name</string>
     <string name="btnUpdate">Update</string>
@@ -11,13 +11,5 @@
     <string name="hintTime">hh/mm</string>
     <string name="hintReport">Generate Report</string>
     <string name="textview">TextView</string>
-
-    <string-array name="schools">
-        <item>Business</item>
-        <item>Computing</item>
-        <item>Energy</item>
-        <item>Mining</item>
-        <item>Nursing</item>
-    </string-array>
 
 </resources>
